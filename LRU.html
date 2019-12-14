@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LRU ALGORITHM</title>
+</head>
+<body>
+<div style="text-align:left" id="LRUTABLE">
+
+</div>
+
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+    var inputs = [];
+
+
+    prompt("Please enter value of n");
+    var m = prompt("Please enter value of m");
+
+    takeInput();
+
+    function takeInput() {
+
+        element = prompt("Enter element");
+        if (element != -1) {
+            inputs.push(element);
+            takeInput();
+        }
+        else {
+
+            var cachesize = m;
+            var leastusedelement = [];
+            var cache = [];
+            var frequency = {};
+            for (var i = 0; i < inputs.length; i++) {
+                if (frequency[inputs[i]]) {
+
+                    frequency[inputs[i]] = frequency[inputs[i]] + 1
+                    $("#LRUTABLE").append("<h1>HIT</h1>")
+                    if (leastusedelement.indexOf(inputs[i]) > 0) {
+                        leastusedelement.splice(leastusedelement.indexOf(inputs[i]), leastusedelement.indexOf(inputs[i]))
+
+                    }
+                    else {
+                        leastusedelement.shift();
+
+                    }
+                }
+                else {
+
+                    $("#LRUTABLE").append("<h1>MISS</h1>")
+                    if (cache.length < cachesize) {
+                        cache.push(inputs[i]);
+                        leastusedelement.push(inputs[i]);
+
+                    }
+                    else {
+
+                        var index = leastusedelement[0];
+
+                        cache[cache.indexOf(index)] = inputs[i];
+                        leastusedelement.shift();
+                        if (leastusedelement.length < 1) {
+                            leastusedelement.push(inputs[i]);
+                        }
+
+                    }
+
+                    frequency[inputs[i]] = 1;
+                }
+                var row = "<table border='2' cellpadding='8' cellspacing='8'><tbody><tr>";
+                for (var x = 0; x < cachesize; x++) {
+
+                    if (cache[x]) {
+
+                        row = row + "<td>" + cache[x] + " </td>"
+
+                    }
+                    else {
+                        row = row + "<td> B</td>";
+                    }
+                }
+                row = row + "</tr> </tbody></table>"
+                $("#LRUTABLE").append(row);
+            }
+        }
+    }
+</script>
+</body>
+</html>
